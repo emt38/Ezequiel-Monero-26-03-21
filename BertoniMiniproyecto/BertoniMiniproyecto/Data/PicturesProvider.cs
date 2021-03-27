@@ -25,7 +25,7 @@ namespace BertoniMiniproyecto.Data
 
         public static async Task<IEnumerable<Photo>> GetPhotosAsync()
         {
-            return await HttpDataProvider.GetAsync<Photo>($"{APIAddress}/albums");
+            return await HttpDataProvider.GetAsync<Photo>($"{APIAddress}/photos");
         }
     }
 }

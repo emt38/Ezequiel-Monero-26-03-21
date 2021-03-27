@@ -1,42 +1,51 @@
 ﻿@model IEnumerable<BertoniMiniproyecto.Models.Album>
 
 @{
-    ViewData["Title"] = "Albums";
+    ViewData["Title"] = "Álbumes";
 }
 
-<h2>My Albums</h2>
+<h2>Mis Álbumes</h2>
 
 <p>
-    Here's a list of the albums currently available in your library
+    Debajo una lista de todos los álbumes disponibles en su librería.
 </p>
 
 <hr />
 
-<table id="albums" class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                Album Title
-            </th>
-            <th>
-                Options
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<h3 class="btn btn-info" data-toggle="collapse" href="#albumsCollapse">
+    Mis Álbumes (@Model.Count())
+</h3>
+
+<div id="albumsCollapse" class="collapse show">
+    <table id="albums" class="table table-striped">
+        <thead>
             <tr>
-                <td>
-                    @item.Title
-                </td>
-                <td>
-                    <a class="btn btn-sm btn-primary" asp-action="Photos" asp-route-id="@item.Id">Explore Photos</a>
-                </td>
+                <th>
+                    Título
+                </th>
+                <th>
+                    Opciones
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id). @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" 
+                           asp-action="Photos" asp-route-id="@item.Id">
+                            Visualizar Álbum
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @section Styles {
     <link rel="stylesheet" type="text/css" href="~/lib/dataTables/dataTables.bootstrap4.min.js" />
