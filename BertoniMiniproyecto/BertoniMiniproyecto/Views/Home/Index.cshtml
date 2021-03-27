@@ -1,8 +1,51 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<BertoniMiniproyecto.Models.Album>
+
+@{
+    ViewData["Title"] = "Albums";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2>My Albums</h2>
+
+<p>
+    Here's a list of the albums currently available in your library
+</p>
+
+<hr />
+
+<table id="albums" class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Album Title
+            </th>
+            <th>
+                Options
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-primary" asp-action="Photos" asp-route-id="@item.Id">Explore Photos</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/lib/dataTables/dataTables.bootstrap4.min.js" />
+}
+
+@section Scripts {
+    <script src="~/lib/dataTables/jquery.dataTables.min.js"></script>
+    <script src="~/lib/dataTables/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $('#albums').DataTable();
+    </script>
+}

@@ -5,33 +5,34 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using BertoniMiniproyecto.Data;
 
 namespace BertoniMiniproyecto.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        public async Task<IActionResult> Index()
         {
-            _logger = logger;
+            return View(await PicturesProvider.GetAlbumsAsync());
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Photos(int id)
         {
-            return View();
+            var result = (await PicturesProvider.GetPhotosAsync())
+                .Where(pic => pic.AlbumId == id);
+
+            if (result.Count() == 0)
+                return NotFound();
+
+            return View(result);
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Comments(int id)
         {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return Json((await PicturesProvider.GetCommentsAsync())
+                .Where(c => c.PostId == id));
         }
     }
 }
